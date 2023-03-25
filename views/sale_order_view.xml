@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale_total']" position="inside">
+                <div class="oe_right">
+                    <label for="amount_total_company_currency" string="Total en moneda de la compañía:"/>
+                    <field name="amount_total_company_currency" widget="monetary" options="{'currency_field': 'company_id.currency_id'}" nolabel="1" readonly="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
