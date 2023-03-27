@@ -10,8 +10,14 @@
         <xpath expr="//td[@name='td_subtotal']" position="inside">
             <span t-field="doc.pricelist_id.currency_id.symbol" />
         </xpath>
-        <xpath expr="//table[@class='table table-sm o_main_table']" position="after">
+        <xpath expr="//div[@name='so_total_summary']" position="after">
             <table class="table table-sm">
+                <tr>
+                    <td><strong>Tipo de cambio:</strong></td>
+                    <td class="text-right">
+                        <span t-esc="round(1 / doc.currency_rate, 2) if doc.currency_rate else 'N/A'"/>
+                    </td>
+                </tr>
                 <tr>
                     <th>Subtotal en moneda de la compañía:</th>
                     <td class="text-right">
@@ -22,12 +28,6 @@
                     <th>Total en moneda de la compañía:</th>
                     <td class="text-right">
                         <span t-esc="doc.amount_total / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Tipo de cambio:</strong></td>
-                    <td class="text-right">
-                        <span t-esc="1 / doc.currency_rate if doc.currency_rate else 'N/A'"/>
                     </td>
                 </tr>
             </table>
