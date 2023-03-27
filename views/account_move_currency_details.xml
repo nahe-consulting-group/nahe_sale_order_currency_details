@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+            <xpath expr="//table[@name='taxes_total']" position="after">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Importe en moneda de la compañía:</strong></td>
+                        <td class="text-right">
+                            <span t-esc="doc.amount_untaxed / doc.currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                        </td>
+                        <td><strong>Total en moneda de la compañía:</strong></td>
+                        <td class="text-right">
+                            <span t-esc="doc.amount_total / doc.currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tipo de cambio:</strong></td>
+                        <td class="text-right">
+                            <span t-esc="1 / doc.currency_rate if doc.currency_rate else 'N/A'"/>
+                        </td>
+                    </tr>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</odoo>
