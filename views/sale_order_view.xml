@@ -5,7 +5,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='sale_total']" position="inside">
+            <xpath expr="//field[@name='total_tax_json']" position="after">
                 <div class="oe_right">
                     <label for="amount_total_company_currency" string="Total en moneda de la compañía:"/>
                     <field name="amount_total_company_currency" widget="monetary" options="{'currency_field': 'company_id.currency_id'}" nolabel="1" readonly="1"/>
