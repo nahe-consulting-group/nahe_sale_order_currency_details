@@ -2,22 +2,16 @@
 <odoo>
     <data>
         <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
-            <xpath expr="//table[@name='taxes_total']" position="after">
+            <xpath expr="//div[@id='total']" position="after">
                 <table class="table table-sm">
-                      <tr>
-                        <td><strong>Tipo de cambio:</strong></td>
-                        <td class="text-right">
-                            <span t-esc="1 / o.currency_rate if doc.currency_rate else 'N/A'"/>
-                        </td>
-                    </tr>
                     <tr>
-                        <td><strong>Importe en moneda de la compañía:</strong></td>
+                        <td><strong>Subtotal en moneda de la compañía:</strong></td>
                         <td class="text-right">
-                            <span t-esc="o.amount_untaxed / o.currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            <span t-esc="o.amount_untaxed * o.l10n_ar_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                         </td>
                         <td><strong>Total en moneda de la compañía:</strong></td>
                         <td class="text-right">
-                            <span t-esc="o.amount_total / o.currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            <span t-esc="o.amount_total * o.l10n_ar_currency_rate" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                         </td>
                     </tr>
                 </table>
