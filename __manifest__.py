@@ -11,6 +11,7 @@ This module adds currency details and converted amounts to the sale order report
     'data': [
         'data/currency_data.xml',
         'views/sale_order_currency_details.xml',
+        'views/account_move_currency_details.xml',
     ],
     'installable': True,
     'application': False,
