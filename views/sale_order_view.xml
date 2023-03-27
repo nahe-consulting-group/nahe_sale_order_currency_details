@@ -5,10 +5,10 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='tax_totals_json']" position="after">
-                <div class="oe_right">
-                    <label for="amount_total_company_currency" string="Total en moneda de la compañía:"/>
-                    <field name="amount_total_company_currency" widget="monetary" options="{'currency_field': 'company_id.currency_id'}" nolabel="1" readonly="1"/>
+            <xpath expr="//group[@name='sale_total']" position="before">
+                <div class="oe_left">
+                    <span style="font-weight: bold;">Total en moneda de la compañía:</span>
+                    <field name="amount_total_company_currency" widget="monetary" options="{'currency_field': 'company_id.currency_id'}" nolabel="1" readonly="1" style="font-weight: bold;"/>
                 </div>
             </xpath>
         </field>
