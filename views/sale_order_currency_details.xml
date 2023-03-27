@@ -24,6 +24,12 @@
                         <span t-esc="doc.amount_total / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
                     </td>
                 </tr>
+                <tr>
+                    <td><strong>Tipo de cambio:</strong></td>
+                    <td class="text-right">
+                        <span t-esc="doc.currency_rate"/>
+                    </td>
+                </tr>
             </table>
         </xpath>
     </template>
