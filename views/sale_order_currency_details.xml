@@ -10,6 +10,11 @@
         <xpath expr="//td[@name='td_subtotal']" position="inside">
             <span t-field="doc.pricelist_id.currency_id.symbol" />
         </xpath>
+         <!-- Pasar la variable "currency_rate" al template "account.document_tax_totals" -->
+            <xpath expr="//t[@t-call='account.document_tax_totals']" position="attributes">
+                <attribute name="t-set">currency_rate</attribute>
+                <attribute name="t-value">currency_rate</attribute>
+            </xpath>
         <xpath expr="//div[@name='so_total_summary']" position="after">
             <table class="table table-sm">
                 <tr>
@@ -33,5 +38,30 @@
             </table>
         </xpath>
     </template>
+    <template id="account_document_tax_totals_inherit" inherit_id="account.document_tax_totals">
+            <!-- Agregar el encabezado de la nueva columna -->
+            <xpath expr="//tr[contains(@class, 'border-black') and contains(@class, 'o_subtotal')]/td[2]" position="before">
+                <td class="text-right"><strong>Moneda de Compañía</strong></td>
+            </xpath>
+
+            <!-- Iterar sobre los subtotales y agregar la columna con el nuevo campo -->
+            <xpath expr="//tr[contains(@class, 'border-black') and contains(@class, 'o_subtotal')]/td[2]" position="after">
+                <td class="text-right">
+                    <span t-esc="subtotal['amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                </td>
+            </xpath>
+
+            <!-- Agregar el total en la nueva columna -->
+            <xpath expr="//tr[contains(@class, 'border-black') and contains(@class, 'o_total')]/td[2]" position="before">
+                <td class="text-right">
+                    <strong>Total en Moneda de Compañía</strong>
+                </td>
+            </xpath>
+            <xpath expr="//tr[contains(@class, 'border-black') and contains(@class, 'o_total')]/td[2]" position="after">
+                <td class="text-right">
+                    <span t-esc="tax_totals['amount_total'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                </td>
+            </xpath>
+        </template>
 </odoo>
 
