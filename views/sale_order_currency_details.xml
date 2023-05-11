@@ -41,7 +41,7 @@
     <!-- Iterar sobre los subtotales y agregar la columna con el nuevo campo -->
     <xpath expr="//tr[contains(@class, 'o_subtotal')]//td[contains(@class, 'text-right')]" position="after">
         <td class="text-right">
-            <span t-esc="subtotal['amount'] / currency_rate if currency_rate else subtotal['amount']" t-options="{'widget': 'monetary'}"/>
+            <span t-esc="subtotal['amount'] / currency_rate if currency_rate else subtotal['amount']" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
         </td>
     </xpath>
 
@@ -53,7 +53,7 @@
                 <span t-esc="tax_totals['formatted_amount_total']"/>
             </td>
             <td class="text-right">
-                <span t-esc="tax_totals['amount_total'] / currency_rate if currency_rate else tax_totals['amount_total']" t-options="{'widget': 'monetary'}"/>
+                <span t-esc="tax_totals['amount_total'] / currency_rate if currency_rate else tax_totals['amount_total']" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
             </td>
         </tr>
     </xpath>
@@ -68,13 +68,13 @@
     <!-- Agregar la columna Moneda de Compañía -->
     <xpath expr="//td[contains(@class, 'o_price_total')][1]" position="after">
         <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary'}" />
+            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
         </td>
     </xpath>
          <!-- Agregar la columna Moneda de Compañía en el bloque else -->
      <xpath expr="(//td[contains(@class, 'o_price_total')])[3]" position="after">
         <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary'}" />
+            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
         </td>
     </xpath>
 </template>
