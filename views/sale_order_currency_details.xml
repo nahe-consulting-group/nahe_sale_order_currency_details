@@ -37,6 +37,18 @@
             </table>
         </xpath>
     </template>
+    <template id="account_invoice_report_inherit" inherit_id="account.report_invoice_document">
+    <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="before">
+        <t t-set="currency_rate" t-value="o.currency_id.with_context(date=o.invoice_date).rate"/>
+    </xpath>
+    
+    <!-- Pasar la variable "currency_rate" al template "account.document_tax_totals" -->
+    <xpath expr="//t[@t-call='account.document_tax_totals']" position="attributes">
+        <attribute name="t-set">currency_rate</attribute>
+        <attribute name="t-value">currency_rate</attribute>
+    </xpath>
+</template>
+
     <template id="account_document_tax_totals_inherit" inherit_id="account.document_tax_totals">
         <t t-foreach="tax_totals['subtotals']" position="before">
     <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.currency_id"/>
