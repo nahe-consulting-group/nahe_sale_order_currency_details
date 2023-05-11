@@ -68,13 +68,13 @@
     <!-- Agregar la columna Moneda de Compañía -->
     <xpath expr="//td[contains(@class, 'o_price_total')][1]" position="after">
         <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
+            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary'}" />
         </td>
     </xpath>
          <!-- Agregar la columna Moneda de Compañía en el bloque else -->
      <xpath expr="(//td[contains(@class, 'o_price_total')])[3]" position="after">
         <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
+            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary'}" />
         </td>
     </xpath>
 </template>
