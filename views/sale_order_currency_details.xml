@@ -4,6 +4,17 @@
         <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="inside">
             <t t-set="currency_rate" t-value="doc.pricelist_id.currency_id.with_context(date=doc.date_order).rate"/>
         </xpath>
+        <th name="th_subtotal" position="after">
+            <th name="th_total_pesos">
+                <span>Total en $</span>
+            </th>
+        </th>
+        <td name="td_subtotal" position="after">
+            <td name="th_total_pesos">
+              <span t-esc="line.price_subtotal/ currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_excluded"/>
+              <span t-esc="line.price_total/ currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_included"/>
+             </td>
+        </td>
         <xpath expr="//td[@name='td_priceunit']" position="inside">
             <span t-field="doc.pricelist_id.currency_id.symbol" />
         </xpath>
