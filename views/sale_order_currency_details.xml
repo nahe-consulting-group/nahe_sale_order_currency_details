@@ -11,8 +11,8 @@
         </th>
         <td name="td_subtotal" position="after">
             <td name="th_total_pesos">
-              <span t-esc="line.price_subtotal/ currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_excluded"/>
-              <span t-esc="line.price_total/ currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_included"/>
+              <span t-esc="line.price_subtotal / currency_rate if currency_rate else line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_excluded"/>
+              <span t-esc="line.price_total / currency_rate if currency_rate else line.price_total" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_included"/>
              </td>
         </td>
         <xpath expr="//td[@name='td_priceunit']" position="inside">
