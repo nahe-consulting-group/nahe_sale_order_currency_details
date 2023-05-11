@@ -41,7 +41,7 @@
     <!-- Iterar sobre los subtotales y agregar la columna con el nuevo campo -->
     <xpath expr="//tr[contains(@class, 'o_subtotal')]//td[contains(@class, 'text-right')]" position="after">
         <td class="text-right">
-            <span t-esc="subtotal['amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+            <span t-esc="subtotal['amount'] / currency_rate" t-options="{'widget': 'monetary'}"/>
         </td>
     </xpath>
 
@@ -53,7 +53,7 @@
                 <span t-esc="tax_totals['formatted_amount_total']"/>
             </td>
             <td class="text-right">
-                <span t-esc="tax_totals['amount_total'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                <span t-esc="tax_totals['amount_total'] / currency_rate" t-options="{'widget': 'monetary'}"/>
             </td>
         </tr>
     </xpath>
