@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
-        <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="inside">
+        <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="before">
             <t t-set="currency_rate" t-value="doc.pricelist_id.currency_id.with_context(date=doc.date_order).rate"/>
         </xpath>
         <th name="th_subtotal" position="after">
