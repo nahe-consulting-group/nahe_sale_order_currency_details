@@ -71,6 +71,12 @@
             <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
         </td>
     </xpath>
+         <!-- Agregar la columna Moneda de Compañía en el bloque else -->
+    <xpath expr="//t[t-else='']/td[contains(@class, 'o_price_total')]" position="after">
+        <td class="text-right o_price_total">
+            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}" />
+        </td>
+    </xpath>
 </template>
 
 </odoo>
