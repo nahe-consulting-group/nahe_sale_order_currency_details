@@ -96,17 +96,36 @@
     <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]"  position="before">
         <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.currency_id"/>
      </t>
-    <xpath expr="//td[contains(@class, 'o_price_total')][1]" position="after">
-        <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
-        </td>
-    </xpath>
-    <xpath expr="(//td[contains(@class, 'o_price_total')])[3]" position="after">
-        <td class="text-right o_price_total">
-            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
-        </td>
-    </xpath>
-    </template>
+        <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" position="replace">
+                <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
+                <tr>
+                    <t t-if="len(tax_totals['groups_by_subtotal'][subtotal_to_show]) &gt; 1 or (tax_totals['amount_untaxed'] != amount_by_group['tax_group_base_amount'])">
+                        <td>
+                            <span t-esc="amount_by_group['tax_group_name']"/>
+                            <span class="text-nowrap"> on
+                                <t t-esc="amount_by_group['formatted_tax_group_base_amount']"/>
+                            </span>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td><span class="text-nowrap" t-esc="amount_by_group['tax_group_name']"/></td>
+                        <td class="text-right o_price_total">
+                            <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
+                        </td>
+                        <td class="text-right o_price_total">
+                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
+                        </td>
+                    </t>
+                </tr>
+            </t>
+            </t>
+       </template>
 
 </odoo>
 
