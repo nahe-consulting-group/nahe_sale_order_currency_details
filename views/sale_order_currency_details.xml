@@ -101,7 +101,7 @@
             <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
         </td>
     </xpath>
-    <xpath expr="(//td[contains(@class, 'o_price_total')])[2]" position="after">
+    <xpath expr="(//td[contains(@class, 'o_price_total')])[3]" position="after">
         <td class="text-right o_price_total">
             <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
         </td>
