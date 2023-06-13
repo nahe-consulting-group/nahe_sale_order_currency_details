@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+         <template id="report_invoice_document_inherit2" inherit_id="account.report_invoice_document">
+            <!-- Asignar la tasa de cambio -->
+            <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="before">
+                <t t-set="currency_rate" t-value="1 / o.l10n_ar_currency_rate"/>
+            </xpath>
+            <!-- Agregar un encabezado para la nueva columna -->
+            <xpath expr="//th[@name='th_subtotal']" position="after">
+                <th name="th_total_pesos">
+                    <span>Total en $</span>
+                </th>
+            </xpath>
+
+            <!-- Agregar una celda para la nueva columna -->
+            <xpath expr="//td[@class='text-right o_price_total']" position="after">
+                <td name="td_total_pesos">
+                    <span t-esc="line.price_subtotal / currency_rate if currency_rate else line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <span t-esc="line.price_total / currency_rate if currency_rate else line.price_total" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" groups="account.group_show_line_subtotals_tax_included"/>
+                </td>
+            </xpath>
+
+            <!-- Pasar la variable "currency_rate" al template "account.document_tax_totals" -->
+            <xpath expr="//t[@t-call='account.document_tax_totals']" position="attributes">
+                <attribute name="t-set">currency_rate</attribute>
+                <attribute name="t-value">currency_rate</attribute>
+            </xpath>
+        </template>
+        <!--<template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@id='total']" position="after">
                 <table class="table table-sm">
                     <tr>
@@ -16,6 +42,6 @@
                     </tr>
                 </table>
             </xpath>
-        </template>
+        </template>-->
     </data>
 </odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_form_inherit_nahe" model="ir.ui.view">
+        <field name="name">account_view_move_form_nahe</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']" position="after">
+                <div class="oe_left">
+                    <span style="font-weight: bold;">Total en moneda de la compañía:</span>
+                    <field name="amount_total_company_currency" widget="monetary" options="{'currency_field': 'company_id.currency_id'}" nolabel="1" readonly="1" style="font-weight: bold;"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

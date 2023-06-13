@@ -37,38 +37,10 @@
             </table>
         </xpath>
     </template>
-    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
-    <!-- Asignar la tasa de cambio -->
-    <xpath expr="//table[@class='table table-sm o_main_table']/tbody" position="before">
-        <t t-set="currency_rate" t-value="o.currency_id.with_context(date=o.invoice_date).rate"/>
-    </xpath>
-
-    <!-- Agregar un encabezado para la nueva columna -->
-    <xpath expr="//th[@name='th_subtotal']" position="after">
-        <th name="th_total_pesos">
-            <span>Total en $</span>
-        </th>
-    </xpath>
-
-    <!-- Agregar una celda para la nueva columna -->
-    <xpath expr="//td[@class='text-right o_price_total']" position="after">
-        <td name="td_total_pesos">
-            <span t-esc="line.price_subtotal / currency_rate if currency_rate else line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" groups="account.group_show_line_subtotals_tax_excluded"/>
-            <span t-esc="line.price_total / currency_rate if currency_rate else line.price_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" groups="account.group_show_line_subtotals_tax_included"/>
-        </td>
-    </xpath>
-
-    <!-- Pasar la variable "currency_rate" al template "account.document_tax_totals" -->
-    <xpath expr="//t[@t-call='account.document_tax_totals']" position="attributes">
-        <attribute name="t-set">currency_rate</attribute>
-        <attribute name="t-value">currency_rate</attribute>
-    </xpath>
-</template>
-
 
     <template id="account_document_tax_totals_inherit" inherit_id="account.document_tax_totals">
         <t t-foreach="tax_totals['subtotals']" position="before">
-    <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.currency_id"/>
+        <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.company_id.currency_id"/>
         </t>
     <xpath expr="//tr[contains(@class, 'o_subtotal')]//td[contains(@class, 'text-right')]" position="after">
         <td class="text-right">
@@ -94,7 +66,7 @@
 
     <template id="account_tax_groups_totals_inherit" inherit_id="account.tax_groups_totals">
     <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]"  position="before">
-        <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.currency_id"/>
+        <t t-set="display_currency" t-value="doc.company_id.currency_id if doc else o.company_id.currency_id"/>
      </t>
         <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" position="replace">
                 <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
@@ -110,7 +82,7 @@
                             <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
                         </td>
                         <td class="text-right o_price_total">
-                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
+                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate if currency_rate else amount_by_group['tax_group_amount']" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
                         </td>
                     </t>
                     <t t-else="">
@@ -119,7 +91,7 @@
                             <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
                         </td>
                         <td class="text-right o_price_total">
-                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
+                            <span t-esc="amount_by_group['tax_group_amount'] / currency_rate if currency_rate else amount_by_group['tax_group_amount']" t-options="{'widget': 'monetary', 'display_currency': display_currency}" />
                         </td>
                     </t>
                 </tr>
